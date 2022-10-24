@@ -17,7 +17,7 @@ phases:
       - docker push public.ecr.aws/i2c7a5l2/daniel-helloworld:latest
 artifact:
   files:
-    - 'hello-0.0.1-SNAPSHOT.jar'
+    - 'target/hello-0.0.1-SNAPSHOT.jar'
     - 'appspec.yml'
     - 'scripts/**/*'
     - 'daniel-helloworld.tar.gz'
