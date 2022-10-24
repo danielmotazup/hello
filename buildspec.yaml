@@ -4,11 +4,15 @@ phases:
     commands:
   pre_build:
     commands:
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/i2c7a5l2
   build:
     commands:
       - mvn install
+      - docker build -t daniel-helloworld .
+      - docker tag daniel-helloworld:latest public.ecr.aws/i2c7a5l2/daniel-helloworld:latest
   post_build:
     commands:
+      - docker push public.ecr.aws/i2c7a5l2/daniel-helloworld:latest
 artifact:
   files:
     - 'target/*.jar'
