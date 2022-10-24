@@ -9,6 +9,6 @@ phases:
       - mvn install
   post_build:
     commands:
-  artifact:
-    files:
-      - 'target/*.jar'
+artifact:
+  files:
+    - 'target/*.jar'
