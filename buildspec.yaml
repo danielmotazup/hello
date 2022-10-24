@@ -2,6 +2,7 @@ version: 0.2
 phases:
   install:
     commands:
+      - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_TOKEN
   pre_build:
     commands:
       - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/i2c7a5l2
@@ -9,10 +10,14 @@ phases:
     commands:
       - mvn install
       - docker build -t daniel-helloworld .
+      - docker save daniel-helloworld | gzip > daniel-helloworld.tar.gz
       - docker tag daniel-helloworld:latest public.ecr.aws/i2c7a5l2/daniel-helloworld:latest
   post_build:
     commands:
       - docker push public.ecr.aws/i2c7a5l2/daniel-helloworld:latest
 artifact:
   files:
-    - 'target/*.jar'
+    - 'hello-0.0.1-SNAPSHOT.jar'
+    - 'appspec.yml'
+    - 'scripts/**/*'
+    - 'daniel-helloworld.tar.gz'
